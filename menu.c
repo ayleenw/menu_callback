@@ -16,7 +16,7 @@ const char *menuTitle[] = {"Hauptmenue", "Submenue 1", "Submenue 2"};
 const int numberOfItems[] = {5, 4, 3};
 
 menuEntry menuEntries[10][10] = {{{"Hmenue 1", Menu, 1}, {"Hmenue 2", Menu, 2}, {"Hmenue 3", Menu, 3}, {"Hmenue 4", Menu, 4}, {"Hmenue 5", Menu, 5}},
-                                 {{"Funktion 1", func1, 0}, {"Funktion 2", func2, 1}, {"Smenue 1_3", Menu, 2}, {"Zurueck", Menu, 0}},
+                                 {{"Smenue 1_1 LED on", func1, 0}, {"Smenue 1_3 LED off", func2, 1}, {"Smenue 1_3", Menu, 2}, {"Zurueck", Menu, 0}},
                                  {{"Smenue 2_1", Menu, 0}, {"Smenue 2_2", Menu, 1}, {"Zurueck", Menu, 0}}};
 
 void CreateMenu(int menuId)
