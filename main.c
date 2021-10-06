@@ -28,9 +28,9 @@ int main()
     DecreaseMarkerPosition();
     DecreaseMarkerPosition();
 
-    cb_func(GetMarkerPosition(), GetCallback()); // Select button
+    CallbackFunctionFromMenuItem(GetMarkerPosition(), GetMenuItemFunction()); // Select button
     IncreaseMarkerPosition();
-    cb_func(GetMarkerPosition(), GetCallback());
+    CallbackFunctionFromMenuItem(GetMarkerPosition(), GetMenuItemFunction());
 
     return 0;
 }

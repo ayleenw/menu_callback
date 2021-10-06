@@ -20,12 +20,12 @@ void SetMarkerPosition(int position);
 void IncreaseMarkerPosition();
 void DecreaseMarkerPosition();
 int GetMarkerPosition();
-op_t GetCallback();
+op_t GetMenuItemFunction();
 void SetStartPosition(int position);
 int GetStartPosition();
 void SetMenuId(int id);
 
-int cb_func(int param, op_t op);
+int CallbackFunctionFromMenuItem(int param, op_t op);
 
 typedef struct
 {

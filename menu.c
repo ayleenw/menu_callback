@@ -115,7 +115,7 @@ int GetMarkerPosition()
     return MarkerPosition;
 }
 
-op_t GetCallback()
+op_t GetMenuItemFunction()
 {
     return *menuEntries[MenuActive][MarkerPosition].opt;
 }
@@ -135,7 +135,7 @@ void SetMenuId(int id)
     MenuActive = id;
 }
 
-int cb_func(int param, op_t op)
+int CallbackFunctionFromMenuItem(int param, op_t op)
 {
     return op(param);
 }
