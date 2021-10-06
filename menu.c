@@ -1,10 +1,16 @@
 #include <stdio.h>
 #include "menu.h"
 #include "func.h"
-#include "lcd_dummy.h" // remove when using with MCU
 
-#define LINES 4
-#define TEST 1 // 1 for print to cmd, 0 for write to LCD
+#define LINES 4 // Set lines acc. to used LCD
+#define TEST 1  // 1 for print to stdout, 0 for write to LCD
+
+#ifndef _TEST_
+#define _TEST_
+#include "lcd_dummy.h"
+#else
+#include "i2clcd.h"
+#endif // end _TEST_
 
 const char *menuTitle[] = {"Hauptmenue", "Submenue 1", "Submenue 1"};
 const int numberOfItems[] = {5, 4, 3};
