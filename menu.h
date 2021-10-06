@@ -21,6 +21,7 @@ void IncreaseMarkerPosition();
 void DecreaseMarkerPosition();
 int GetMarkerPosition();
 op_t GetMenuItemFunction();
+int GetMenuTarget();
 void SetStartPosition(int position);
 int GetStartPosition();
 void SetMenuId(int id);
@@ -31,6 +32,7 @@ typedef struct
 {
     char *menuText;
     op_t opt;
+    int target;
 
 } menuEntry;
 

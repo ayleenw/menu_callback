@@ -28,9 +28,13 @@ int main()
     DecreaseMarkerPosition();
     DecreaseMarkerPosition();
 
-    CallbackFunctionFromMenuItem(GetMarkerPosition(), GetMenuItemFunction()); // Select button
+    CallbackFunctionFromMenuItem(GetMenuTarget(), GetMenuItemFunction()); // Select button
     IncreaseMarkerPosition();
-    CallbackFunctionFromMenuItem(GetMarkerPosition(), GetMenuItemFunction());
+    IncreaseMarkerPosition();
+    CallbackFunctionFromMenuItem(GetMenuTarget(), GetMenuItemFunction());
+    CallbackFunctionFromMenuItem(GetMenuTarget(), GetMenuItemFunction());
+    IncreaseMarkerPosition();
+    CallbackFunctionFromMenuItem(GetMenuTarget(), GetMenuItemFunction());
 
     return 0;
 }

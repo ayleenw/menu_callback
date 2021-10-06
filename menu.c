@@ -12,12 +12,12 @@
 #include "i2clcd.h"
 #endif // end _TEST_
 
-const char *menuTitle[] = {"Hauptmenue", "Submenue 1", "Submenue 1"};
+const char *menuTitle[] = {"Hauptmenue", "Submenue 1", "Submenue 2"};
 const int numberOfItems[] = {5, 4, 3};
 
-menuEntry menuEntries[10][10] = {{{"Hmenue 1", Menu}, {"Hmenue 2", Menu}, {"Hmenue 3", Menu}, {"Hmenue 4", Menu}, {"Hmenue 5", Menu}},
-                                 {{"Smenue 1_1", func1}, {"Smenue 1_2", func2}, {"Smenue 1_3", Menu}, {"Smenue 1_4", Menu}},
-                                 {{"Smenue 2_1", Menu}, {"Smenue 2_2", Menu}, {"Smenue 2_3", Menu}}};
+menuEntry menuEntries[10][10] = {{{"Hmenue 1", Menu, 1}, {"Hmenue 2", Menu, 2}, {"Hmenue 3", Menu, 3}, {"Hmenue 4", Menu, 4}, {"Hmenue 5", Menu, 5}},
+                                 {{"Funktion 1", func1, 0}, {"Funktion 2", func2, 1}, {"Smenue 1_3", Menu, 2}, {"Zurueck", Menu, 0}},
+                                 {{"Smenue 2_1", Menu, 0}, {"Smenue 2_2", Menu, 1}, {"Zurueck", Menu, 0}}};
 
 void CreateMenu(int menuId)
 {
@@ -124,6 +124,11 @@ int GetMarkerPosition()
 op_t GetMenuItemFunction()
 {
     return *menuEntries[MenuActive][MarkerPosition].opt;
+}
+
+int GetMenuTarget()
+{
+    return menuEntries[MenuActive][MarkerPosition].target;
 }
 
 void SetStartPosition(int position)
