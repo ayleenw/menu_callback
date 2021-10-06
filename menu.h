@@ -2,9 +2,18 @@
 #define _MENU_H_
 
 typedef int (*op_t)(int);
-int func1(int param);
-int func2(int param);
-int menu(int param);
+
+void CreateMenu(int menuId);
+int Menu(int param);
+void SetMarkerPosition(int position);
+void IncreaseMarkerPosition();
+void DecreaseMarkerPosition();
+int GetMarkerPosition();
+op_t GetCallback();
+void SetStartPosition(int position);
+int GetStartPosition();
+void SetMenuId(int id);
+
 int cb_func(int param, op_t op);
 
 typedef struct
@@ -13,5 +22,10 @@ typedef struct
     op_t opt;
 
 } menuEntry;
+
+static int MenuItems;
+static int StartPosition;
+static int MarkerPosition;
+static int MenuActive = -1;
 
 #endif // end _MENU_H_
