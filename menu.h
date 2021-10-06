@@ -14,7 +14,6 @@
 
 typedef int (*op_t)(int);
 
-void CreateMenu(int menuId);
 int Menu(int param);
 void SetMarkerPosition(int position);
 void IncreaseMarkerPosition();

@@ -19,14 +19,6 @@ menuEntry menuEntries[10][10] = {{{"Hmenue 1", Menu, 1}, {"Hmenue 2", Menu, 2}, 
                                  {{"Smenue 1_1 LED on", func1, 0}, {"Smenue 1_3 LED off", func2, 1}, {"Smenue 1_3", Menu, 2}, {"Zurueck", Menu, 0}},
                                  {{"Smenue 2_1", Menu, 0}, {"Smenue 2_2", Menu, 1}, {"Zurueck", Menu, 0}}};
 
-void CreateMenu(int menuId)
-{
-    MenuItems = numberOfItems[menuId];
-    StartPosition = 0;
-    MarkerPosition = 0;
-    Menu(menuId);
-}
-
 int Menu(int id)
 {
     if (id != MenuActive)
