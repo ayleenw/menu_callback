@@ -3,9 +3,9 @@
 #include "func.h"
 
 #define LINES 4 // Set lines acc. to used LCD
-#define TEST 1  // 1 for print to stdout, 0 for write to LCD
+#define TEST 1  // Keep for print to stdout, remove for write to real LCD
 
-#ifndef TEST
+#ifdef TEST
 #include "lcd_dummy.h"
 #else
 #include "i2clcd.h"

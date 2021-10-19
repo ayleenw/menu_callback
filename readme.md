@@ -1,6 +1,6 @@
 # A simple menu system with callback functions
 
-## Uses an LCD display and a rotary encoder, implemented in C for use with a MCU
+## Uses an LCD display and a rotary encoder, implemented in C for use with an MCU
 
 This implements a menu to be shown on a LCD display (4 lines by 20 characters), connected to a microcontroller (STM32, Arduino, you name it) and controlled by a rotary encoder (alternatively it could be used with 3 buttons: up, down and select).
 
