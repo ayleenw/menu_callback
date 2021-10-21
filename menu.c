@@ -82,7 +82,7 @@ void injectVariableValueFloat(int menuId, int menuItem, float value)
     if (TEST)
         printf("Menu text: %s\n", menuEntries[menuId][menuItem].menuText);
     char valueAsText[VALUE_LEN];
-    snprintf(valueAsText, VALUE_LEN, "%f", value);
+    snprintf(valueAsText, VALUE_LEN, "%.1f", value);
 
     int position = getMenuTextLength(menuId, menuItem);
     if (TEST)
