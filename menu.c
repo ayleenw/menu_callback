@@ -1,17 +1,12 @@
 #include <stdio.h>
 #include "menu.h"
 #include "func.h"
+#include "i2clcd.h"
 
 #define LINES 4     // Set lines acc. to used LCD
 #define COLUMNS 20  // Set columns acc. to used LCD
 #define VALUE_LEN 5 // max length for injected live values (-1)
-#define TEST 1      // Keep for print to stdout, remove for write to real LCD
-
-#ifdef TEST
-#include "lcd_dummy.h"
-#else
-#include "i2clcd.h"
-#endif
+#define TEST 1      // 1 to print to stdout, 0 to write to real LCD
 
 const char *menuTitle[] = {"Hauptmenue", "Submenue 1", "Submenue 2"};
 const int numberOfItems[] = {3, 4, 3};
