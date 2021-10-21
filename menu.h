@@ -24,14 +24,16 @@ int GetMenuTarget();
 void SetStartPosition(int position);
 int GetStartPosition();
 void SetMenuId(int id);
+int getMenuTextLength(int menuId, int menuItem);
+void injectVariableValueFloat(int menuId, int menuItem, float value);
 
 int CallbackFunctionFromMenuItem(int param, op_t op);
 
 typedef struct
 {
-    char *menuText;
-    op_t opt;
-    int target;
+  char *menuText;
+  op_t opt;
+  int target;
 
 } menuEntry;
 

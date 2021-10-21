@@ -36,5 +36,8 @@ int main()
     IncreaseMarkerPosition();
     CallbackFunctionFromMenuItem(GetMenuTarget(), GetMenuItemFunction());
 
+    float battV = 40.3;
+    injectVariableValueFloat(1, 2, battV);
+
     return 0;
 }

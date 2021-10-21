@@ -2,8 +2,10 @@
 #include "menu.h"
 #include "func.h"
 
-#define LINES 4 // Set lines acc. to used LCD
-#define TEST 1  // Keep for print to stdout, remove for write to real LCD
+#define LINES 4     // Set lines acc. to used LCD
+#define COLUMNS 20  // Set columns acc. to used LCD
+#define VALUE_LEN 5 // max length for injected live values (-1)
+#define TEST 1      // Keep for print to stdout, remove for write to real LCD
 
 #ifdef TEST
 #include "lcd_dummy.h"
@@ -15,7 +17,7 @@ const char *menuTitle[] = {"Hauptmenue", "Submenue 1", "Submenue 2"};
 const int numberOfItems[] = {3, 4, 3};
 
 menuEntry menuEntries[10][10] = {{{"Hmenue 1", Menu, 1}, {"Hmenue 2", Menu, 2}, {"Hmenue 3", Menu, 3}},
-                                 {{"Smenue 1_1 LED on", func1, 0}, {"Smenue 1_3 LED off", func2, 1}, {"Smenue 1_3", Menu, 2}, {"Zurueck", Menu, 0}},
+                                 {{"Smenue 1_1 LED on", func1, 0}, {"Smenue 1_3 LED off", func2, 1}, {"Spannung:", Menu, 2}, {"Zurueck", Menu, 0}},
                                  {{"Smenue 2_1", Menu, 0}, {"Smenue 2_2", Menu, 1}, {"Zurueck", Menu, 0}}};
 
 int Menu(int id)
@@ -63,6 +65,32 @@ int Menu(int id)
     }
 
     return 0;
+}
+
+int getMenuTextLength(int menuId, int menuItem)
+{
+    int i = 0;
+    while (menuEntries[menuId][menuItem].menuText[i] != '\0')
+    {
+        i++;
+    }
+    return i;
+}
+
+void injectVariableValueFloat(int menuId, int menuItem, float value)
+{
+    if (TEST)
+        printf("Menu text: %s\n", menuEntries[menuId][menuItem].menuText);
+    char valueAsText[VALUE_LEN];
+    snprintf(valueAsText, VALUE_LEN, "%f", value);
+
+    int position = getMenuTextLength(menuId, menuItem);
+    if (TEST)
+        printf("Menu text length: %d\n", position);
+    if (TEST)
+        printf("Value: %s\n", valueAsText);
+    else
+        lcd_write(valueAsText, menuItem + StartPosition, position + 2);
 }
 
 // SetMarkerPosition function not thoroughly tested! Use  IncreaseMarkerPosition / DecreaseMarkerPosition if possibile or perform tests
