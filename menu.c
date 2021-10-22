@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "menu.h"
+#include "main.h"
 #include "func.h"
 #include "i2clcd.h"
 
@@ -9,11 +10,11 @@
 #define TEST 1      // 1 to print to stdout, 0 to write to real LCD
 
 const char *menuTitle[] = {"Hauptmenue", "Submenue 1", "Submenue 2"};
-const int numberOfItems[] = {3, 4, 3};
+const int numberOfItems[] = {2, 4, 5};
 
-menuEntry menuEntries[10][10] = {{{"Hmenue 1", Menu, 1}, {"Hmenue 2", Menu, 2}, {"Hmenue 3", Menu, 3}},
-                                 {{"Smenue 1_1 LED on", func1, 0}, {"Smenue 1_3 LED off", func2, 1}, {"Spannung:", Menu, 2}, {"Zurueck", Menu, 0}},
-                                 {{"Smenue 2_1", Menu, 0}, {"Smenue 2_2", Menu, 1}, {"Zurueck", Menu, 0}}};
+menuEntry menuEntries[10][10] = {{{"Hmenue 1", Menu, 1, NULL}, {"Hmenue 2", Menu, 2, NULL}},
+                                 {{"Smenue 1_1 LED on", func1, 0, NULL}, {"Smenue 1_3 LED off", func2, 1, NULL}, {"Gehe zu 2:", Menu, 2, NULL}, {"Zurueck", Menu, 0, NULL}},
+                                 {{"Spannung:", NoOp, 0, getBattVoltage}, {"Strom:", NoOp, 0, getBattCurrent}, {"MCU out:", NoOp, 1, getVsel}, {"Gehe zu 1:", Menu, 1, NULL}, {"Zurueck", Menu, 0, NULL}}};
 
 int Menu(int id)
 {
@@ -53,13 +54,32 @@ int Menu(int id)
                 lcd_write("  ", i, 0);
         }
         if (TEST)
-            printf("%s\n", menuEntries[id][entryPos].menuText);
+            printf("%s", menuEntries[id][entryPos].menuText);
         else
             lcd_write(menuEntries[id][entryPos].menuText, i, 2);
+        if (menuEntries[id][entryPos].value != NULL)
+        {
+            int linePos = getMenuTextLength(id, entryPos);
+            char valueAsText[VALUE_LEN];
+            snprintf(valueAsText, VALUE_LEN, "%.1f", CallbackFunctionGetFloat(menuEntries[id][entryPos].value));
+            if (TEST)
+                printf(" %s\n", valueAsText);
+            else
+                lcd_write(valueAsText, i, linePos + 3);
+        }
+        else
+        {
+            if (TEST)
+                printf("\n");
+        }
         entryPos++;
     }
-
     return 0;
+}
+
+void UpdateActualMenu()
+{
+    Menu(MenuActive);
 }
 
 int getMenuTextLength(int menuId, int menuItem)
@@ -72,42 +92,9 @@ int getMenuTextLength(int menuId, int menuItem)
     return i;
 }
 
-void injectVariableValueFloat(int menuId, int menuItem, float value)
+void increase_marker_position()
 {
-    if (TEST)
-        printf("Menu text: %s\n", menuEntries[menuId][menuItem].menuText);
-    char valueAsText[VALUE_LEN];
-    snprintf(valueAsText, VALUE_LEN, "%.1f", value);
-
-    int position = getMenuTextLength(menuId, menuItem);
-    if (TEST)
-        printf("Menu text length: %d\n", position);
-    if (TEST)
-        printf("Value: %s\n", valueAsText);
-    else
-        lcd_write(valueAsText, menuItem + StartPosition, position + 2);
-}
-
-// SetMarkerPosition function not thoroughly tested! Use  IncreaseMarkerPosition / DecreaseMarkerPosition if possibile or perform tests
-void SetMarkerPosition(int position)
-{
-    MarkerPosition = position;
-    // Increasing the marker position
-    if (MarkerPosition > StartPosition + LINES - 2)
-    {
-        SetStartPosition(MarkerPosition - LINES + 2);
-    }
-    // Decreasing the marker position
-    if (MarkerPosition < StartPosition)
-    {
-        SetStartPosition(MarkerPosition);
-    }
-    Menu(MenuActive);
-}
-
-void IncreaseMarkerPosition()
-{
-    if (MarkerPosition < MenuItems)
+    if (MarkerPosition < MenuItems - 1)
     {
         MarkerPosition++;
         if (MarkerPosition > StartPosition + LINES - 2)
@@ -118,7 +105,7 @@ void IncreaseMarkerPosition()
     }
 }
 
-void DecreaseMarkerPosition()
+void decrease_marker_position()
 {
     if (MarkerPosition > 0)
     {
@@ -136,9 +123,14 @@ int GetMarkerPosition()
     return MarkerPosition;
 }
 
-op_t GetMenuItemFunction()
+op_int_t GetMenuItemFunction()
 {
     return *menuEntries[MenuActive][MarkerPosition].opt;
+}
+
+op_float_t GetMenuItemValue()
+{
+    return *menuEntries[MenuActive][MarkerPosition].value;
 }
 
 int GetMenuTarget()
@@ -161,7 +153,17 @@ void SetMenuId(int id)
     MenuActive = id;
 }
 
-int CallbackFunctionFromMenuItem(int param, op_t op)
+int CallbackFunctionFromMenuItem(int param, op_int_t op)
 {
     return op(param);
+}
+
+float CallbackFunctionGetFloat(op_float_t op)
+{
+    return op();
+}
+
+int NoOp(int n)
+{
+    return n;
 }
